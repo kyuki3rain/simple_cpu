@@ -11,6 +11,7 @@ import (
 
 type Simulator struct {
 	pc       uint16
+	ir       uint16
 	ram      [256]uint16
 	rom      [256]uint16
 	register [8]uint16
@@ -47,14 +48,16 @@ func (s *Simulator) Step() {
 	if !s.status {
 		return
 	}
-
-	ord := order.Decode(s.rom[s.pc])
+	s.ir = s.rom[s.pc]
 	s.pc++
-	s.Exec(ord)
+	s.Exec(order.Decode(s.ir))
 }
 
 func (s Simulator) String() string {
 	var res = bytes.NewBufferString("")
+	res.WriteString(fmt.Sprintf("pc: %d\n", s.pc))
+	res.WriteString(fmt.Sprintf("ir: %d\n", s.ir))
+	res.WriteString(fmt.Sprintf("ram[64]: %d\n", s.ram[64]))
 	for i := 0; i < 8; i++ {
 		res.WriteString(fmt.Sprintf("REG%d: %d\n", i, s.register[i]))
 	}
