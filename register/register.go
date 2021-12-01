@@ -1,9 +1,11 @@
-package registor
+package register
 
-type Registor int
+import "strings"
+
+type Register uint16
 
 const (
-	REG0 Registor = iota
+	REG0 Register = iota
 	REG1
 	REG2
 	REG3
@@ -11,11 +13,10 @@ const (
 	REG5
 	REG6
 	REG7
-	NIL
 )
 
-func Translate(s string) Registor {
-	switch s {
+func Translate(s string) Register {
+	switch strings.ToUpper(s) {
 	case "REG0":
 		return REG0
 	case "REG1":
@@ -33,6 +34,6 @@ func Translate(s string) Registor {
 	case "REG7":
 		return REG7
 	default:
-		return NIL
+		return 0xffff
 	}
 }

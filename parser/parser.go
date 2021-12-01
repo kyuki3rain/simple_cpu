@@ -1,15 +1,23 @@
 package parser
 
 import (
-	"github.com/kyuki3rain/simple_cpu/opcode"
-	"github.com/kyuki3rain/simple_cpu/registor"
+	"strings"
+
+	"github.com/kyuki3rain/simple_cpu/order"
 )
 
-type Order struct {
-	opcode   opcode.Opcode
-	operands []registor.Registor
-}
+func Parse(program string) []order.Order {
+	var orders []order.Order
+	order_strings := strings.Split(program, "\n")
 
-func Perse(program string) [256]int {
-	strings.split(program, "\n")
+	for _, s := range order_strings {
+		if s == "" {
+			continue
+		}
+
+		order_string := strings.Fields(s)
+		orders = append(orders, order.Init(order_string))
+	}
+
+	return orders
 }

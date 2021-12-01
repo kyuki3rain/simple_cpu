@@ -1,6 +1,8 @@
 package opcode
 
-type Opcode int
+import "strings"
+
+type Opcode uint16
 
 const (
 	MOV Opcode = iota
@@ -62,7 +64,7 @@ func (o Opcode) String() string {
 }
 
 func Translate(s string) Opcode {
-	switch s {
+	switch strings.ToUpper(s) {
 	case "MOV":
 		return MOV
 	case "ADD":

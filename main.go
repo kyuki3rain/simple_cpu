@@ -2,15 +2,27 @@ package main
 
 import (
 	"fmt"
+	"io/ioutil"
+	"os"
 
-	"github.com/kyuki3rain/simple_cpu/registor"
+	"github.com/kyuki3rain/simple_cpu/simulator"
 )
 
 func main() {
-	var reg map[registor.Registor]int
-	var rom [256]int
-	var ram [256]int
+	f, err := os.Open(os.Args[1])
+	if err != nil {
+		fmt.Println("error1")
+		return
+	}
+	defer f.Close()
 
-	strings.split("a", "a")
-	fmt.Printf("")
+	b, err := ioutil.ReadAll(f)
+	if err != nil {
+		fmt.Println("error2")
+		return
+	}
+
+	sim := simulator.Init(string(b))
+	sim.Boot()
+	fmt.Println(sim)
 }
